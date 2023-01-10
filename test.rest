@@ -1,1 +1,7 @@
 GET http://localhost:5002
+
+###
+GET http://localhost:5002/400
+
+###
+GET http://localhost:5002/500
