@@ -6,44 +6,25 @@ const expressWinston = require('express-winston');
 const { transports, format } = require('winston');
 require('winston-mongodb');
 
+const newLogger = require('./logger');
+
 /** env variables */
 const port = process.env.PORT;
 const mongodb = process.env.MONGO;
 
 /** middleware for (handling) routes -- should be created before routes */
 app.use(expressWinston.logger({
-    transports: [
-        new transports.Console(),
-        new transports.File({
-            level: 'warn',
-            filename: 'logsWarnings.log'
-        }),
-        new transports.File({
-            level: 'error',
-            filename: 'logsErrors.log'
-        }),
-        // new transports.MongoDB({
-        //     db: mongodb,
-        //     /** no need to specify collection name as below as it defaults 
-        //      *  to a collection named: 'log'
-        //      */
-        //     collection: 'logs'
-        // })
-    ],
-    format: format.combine(
-        format.json(),
-        format.timestamp(),
-        format.metadata(),
-        format.prettyPrint()
-    ),
+    winstonInstance: newLogger,
     statusLevels: true
 }));
 
 app.get('/', (req, res) => {
+    newLogger.info('This is an info log.')
     res.sendStatus(200);
 });
 
 app.get('/400', (req, res) => {
+    newLogger.warn('This is an warn log.')
     res.sendStatus(400);
 });
 
@@ -67,7 +48,7 @@ const myFormat = format.printf(({level, meta, timestamp}) => {
 app.use(expressWinston.errorLogger({
     transports: [
         new transports.File({
-            filename: 'internalErrorLogs.log'
+            filename: 'logsInternalErrors.log'
         })
     ],
     format: format.combine(
