@@ -4,9 +4,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 const expressWinston = require('express-winston');
 const { transports, format } = require('winston');
+require('winston-mongodb');
 
-/** port */
+/** env variables */
 const port = process.env.PORT;
+const mongodb = process.env.MONGO;
 
 app.use(expressWinston.logger({
     transports: [
@@ -18,11 +20,19 @@ app.use(expressWinston.logger({
         new transports.File({
             level: 'error',
             filename: 'logsErrors.log'
+        }),
+        new transports.MongoDB({
+            db: mongodb,
+            /** no need to specify collection name as below as it defaults 
+             *  to a collection named: 'log'
+             */
+            collection: 'logs'
         })
     ],
     format: format.combine(
         format.json(),
         format.timestamp(),
+        format.metadata(),
         format.prettyPrint()
     ),
     statusLevels: true
