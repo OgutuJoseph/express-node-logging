@@ -23,6 +23,14 @@ app.get('/', (req, res) => {
     res.sendStatus(200);
 });
 
+app.get('/400', (req, res) => {
+    res.sendStatus(400);
+});
+
+app.get('/500', (req, res) => {
+    res.sendStatus(500);
+});
+
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
-})
+});
