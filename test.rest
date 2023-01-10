@@ -5,3 +5,6 @@ GET http://localhost:5002/400
 
 ###
 GET http://localhost:5002/500
+
+###
+GET http://localhost:5002/error
