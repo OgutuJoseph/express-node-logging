@@ -10,13 +10,22 @@ const port = process.env.PORT;
 
 app.use(expressWinston.logger({
     transports: [
-        new transports.Console()
+        new transports.Console(),
+        new transports.File({
+            level: 'warn',
+            filename: 'logsWarnings.log'
+        }),
+        new transports.File({
+            level: 'error',
+            filename: 'logsErrors.log'
+        })
     ],
     format: format.combine(
         format.json(),
         format.timestamp(),
         format.prettyPrint()
-    )
+    ),
+    statusLevels: true
 }));
 
 app.get('/', (req, res) => {

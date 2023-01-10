@@ -1,0 +1,22 @@
+{
+  meta: {
+    req: {
+      url: '/500',
+      headers: {
+        'user-agent': 'vscode-restclient',
+        'accept-encoding': 'gzip, deflate',
+        host: 'localhost:5002',
+        connection: 'close'
+      },
+      method: 'GET',
+      httpVersion: '1.1',
+      originalUrl: '/500',
+      query: {}
+    },
+    res: { statusCode: 500 },
+    responseTime: 1
+  },
+  level: 'error',
+  message: 'HTTP GET /500',
+  timestamp: '2023-01-10T08:35:36.405Z'
+}
